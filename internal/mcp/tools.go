@@ -63,7 +63,7 @@ func (d *MCPDriver) Execute(ctx context.Context, req plugins.ExecuteRequest) (*p
 		return nil, fmt.Errorf("unknown MCP server %q", serverName)
 	}
 
-	return srv.callTool(ctx, toolName, req.Arguments)
+	return srv.callTool(ctx, toolName, req.Args.AsMap())
 }
 
 func (d *MCPDriver) Validate(_ context.Context, req plugins.ExecuteRequest) (*plugins.ValidateResponse, error) {

@@ -41,8 +41,15 @@ func (d *MCPDriver) GetPluginInfo() plugins.PluginInfo {
 	}
 }
 
-func (d *MCPDriver) ProbePlugin(_ context.Context) (bool, error) {
-	return true, nil
+func (d *MCPDriver) GetPluginHealth(_ context.Context) (*plugins.PluginHealth, error) {
+	d.mu.RLock()
+	connected := len(d.servers)
+	d.mu.RUnlock()
+	return &plugins.PluginHealth{
+		Status:  plugins.StatusHealthy,
+		Code:    plugins.HealthCodeOK,
+		Message: fmt.Sprintf("%d MCP server(s) connected", connected),
+	}, nil
 }
 
 func (d *MCPDriver) GetCapabilities(_ context.Context) (*plugins.DriverCapabilities, error) {
@@ -104,7 +111,7 @@ func (d *MCPDriver) GetProviderPlugin(_ context.Context) (plugins.ProviderPlugin
 	return nil, errors.ErrPluginNotSupported
 }
 
-func (d *MCPDriver) GetMemoryPlugin(_ context.Context) (plugins.MemoryPlugin, error) {
+func (d *MCPDriver) GetResourcePlugin(_ context.Context) (plugins.ResourcePlugin, error) {
 	return nil, errors.ErrPluginNotSupported
 }
 

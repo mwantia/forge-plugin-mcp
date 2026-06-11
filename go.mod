@@ -30,4 +30,4 @@ require (
 	google.golang.org/protobuf v1.36.10 // indirect
 )
 
-replace github.com/mwantia/forge-sdk => ../../shared
+replace github.com/mwantia/forge-sdk => ../../sdk

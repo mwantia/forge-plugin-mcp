@@ -125,11 +125,10 @@ func mcpContentToText(contents []mcp.Content) string {
 	return strings.Join(parts, "\n")
 }
 
-// inputSchemaToParams converts an MCP ToolInputSchema to the map[string]any
-// format expected by forge's ToolDefinition.Parameters.
-func inputSchemaToParams(schema mcp.ToolInputSchema) map[string]any {
+// inputSchemaToParams converts an MCP ToolInputSchema to a plugins.ToolParameters.
+func inputSchemaToParams(schema mcp.ToolInputSchema) plugins.ToolParameters {
 	b, _ := json.Marshal(schema)
-	var result map[string]any
-	_ = json.Unmarshal(b, &result)
-	return result
+	var params plugins.ToolParameters
+	_ = json.Unmarshal(b, &params)
+	return params
 }
